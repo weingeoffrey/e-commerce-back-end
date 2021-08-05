@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   Product.findAll({
-    include: [Category, Tag]
+    include: [Category, Tag],
+    attributes: {exclude: ['categoryId']}
   }).then(dbProductData => res.json(dbProductData)).catch(err => {console.log(err); res.status(500).json(err);})
 });
 
@@ -18,6 +19,7 @@ router.get('/:id', (req, res) => {
   // be sure to include its associated Category and Tag data
   Product.findOne({
     include: [Category, Tag],
+    attributes: {exclude: ['categoryId']},
     where: {
       id: req.params.id
     }
